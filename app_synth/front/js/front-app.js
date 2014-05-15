@@ -1,44 +1,60 @@
-var dataLoaderRunner = [
-  'dataLoader',
-  function (dataLoader) {
-    return dataLoader();
+var dataLoaderRunnerPeople = ['dataLoaderPeople', function (dataLoaderPeople) {
+    return dataLoaderPeople();
   }
 ];
-angular.module('app_synth', ['ngRoute','ui.router'])
-  .config(function ($routeProvider, $locationProvider, $urlRouterProvider, $stateProvider) {
-    $urlRouterProvider.otherwise('/tweets');
 
+
+angular.module('app_synth', ['ngRoute','ui.router'])
+  .config(function ($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('tweets', {
-        url: '/tweets'
+      .state('people', {
+        url: '/people'
       })
       .state('contact', {
         url:'/contact'
+      })
+      .state('admin', {
+        url:'/admin'
       });
+
     $routeProvider
-    .when('/tweets', {
-      templateUrl: '/html/tweets/getIndex.html',
-      controller: 'tweetsController',
+    .when('/', {
+      templateUrl: '/html/login/login.html',
+      controller: 'loginCtrl',
+    })
+    .when('/people', {
+      templateUrl: '/html/people/getIndex.html',
+      controller: 'peopleController',
       resolve: {
-        data: dataLoaderRunner
+        data: dataLoaderRunnerPeople
       }
     })
     .when('/contact', {
       templateUrl: 'html/contact.html',
       controller: 'contactCtrl'
+    })
+    .when('/admin', {
+      templateUrl: 'html/people/post.html',
+      controller: 'postCtrl',
+      resolve: {
+        data: dataLoaderRunnerPeople
+      }
+    })
+    .otherwise({
+      redirectTo: '/'
     });
 
     $locationProvider.html5Mode(true);
   })
 
-.service('dataLoader', function ($location, $http) {
+.service('dataLoaderPeople', function ($location, $http) {
   return function () {
     if (preloadedData) {
       var data = preloadedData;
       preloadedData = null;
       return data;
     } else {
-      return $http.get( '/api' + $location.path() ).then(function (res) {
+      return $http.get( '/api/people' ).then(function (res) {
         return res.data;
       });
     }

@@ -17,7 +17,7 @@ html
   body
     div.container(ng-app="app_synth")
       header(ng-include="'html/header.html'")
-      div(ng-view)
+      div.container(ng-view)
       footer(ng-include="'html/footer.html'")
 
     if preloadHTML
