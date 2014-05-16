@@ -1,7 +1,10 @@
 angular
 	.module('app_synth')
-	.controller('postCtrl', function ($scope, $http, $route, data){
-		$scope.hide_alert = true;
+	.controller('postCtrl', function ($scope, $http, $route, $location, data){
+		if(!isLogged)
+			$location.path('/');
+
+		$scope.hide_alert= true;
 		$scope.title = 'Administration';
 		$scope.people = data;
 		

@@ -1,3 +1,3 @@
-[{"pwd":"a","username":"John"},
-{"pwd":"z","username":"Deb"},
-{"pwd":"e","username":"Pete"}]
+[{"pwd":"a","username":"John", "role":"1"},
+{"pwd":"z","username":"Deb", "role":"2"},
+{"pwd":"e","username":"Pete", "role":"2"}]

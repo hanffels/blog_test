@@ -1,4 +1,7 @@
 angular.module('app_synth')
-.controller('contactCtrl', function ($scope) {
-  $scope.contact = 'hey';
+.controller('contactCtrl', function ($scope, $location) {
+	if(!isLogged)
+		$location.path('/');
+
+	$scope.contact = 'hey';
 });

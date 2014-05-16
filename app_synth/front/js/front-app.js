@@ -2,7 +2,7 @@ var dataLoaderRunnerPeople = ['dataLoaderPeople', function (dataLoaderPeople) {
     return dataLoaderPeople();
   }
 ];
-
+var isLogged=false;
 
 angular.module('app_synth', ['ngRoute','ui.router'])
   .config(function ($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
@@ -20,7 +20,7 @@ angular.module('app_synth', ['ngRoute','ui.router'])
     $routeProvider
     .when('/', {
       templateUrl: '/html/login/login.html',
-      controller: 'loginCtrl',
+      controller: 'loginCtrl'
     })
     .when('/people', {
       templateUrl: '/html/people/getIndex.html',
@@ -40,10 +40,7 @@ angular.module('app_synth', ['ngRoute','ui.router'])
         data: dataLoaderRunnerPeople
       }
     })
-    .otherwise({
-      redirectTo: '/'
-    });
-
+    .otherwise('/');
     $locationProvider.html5Mode(true);
   })
 

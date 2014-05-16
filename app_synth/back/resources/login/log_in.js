@@ -1,11 +1,11 @@
 exports.postLogFirstCo = function (req, res) {
+	console.log('logging');
 	var fs = require('fs');
 	var logins = JSON.parse(fs.readFileSync(req.url_logins, 'utf8'));
 
 	var username = req.body.username;
 	var pwd = req.body.pwd;
 
-	console.log('id : '+username+' - '+pwd);
 	var check_log_ok=false,i=0;
 	while(!check_log_ok && i<logins.length){
 		if (username == logins[i].username && pwd == logins[i].pwd)
@@ -13,8 +13,12 @@ exports.postLogFirstCo = function (req, res) {
 		i++;
 	}
 	if (check_log_ok){
-		return true;
+		req.session.isLogged = true;
+		res.send(true);
 	}
-	else
-		return false;
+	else{
+		req.session.isLogged = false;
+		res.send(false);
+	}
+
 };

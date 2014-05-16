@@ -4,11 +4,10 @@ exports.getIndex = function (req, res) {
 };
 
 exports.getIsLogged = function (req, res) {
-	console.log('Req.session : ');
-	return "undef";
+	console.log(req.session.isLogged);
 	//res.send(null);
-	// if(!req.session)
-	// 	res.send(false);
-	// else
- //  		res.send(true);
+	if(!req.session.isLogged)
+	 	res.send(false);
+	else
+ 	  	res.send(true);
 };
