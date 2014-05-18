@@ -1,10 +1,11 @@
 //This page drive all the loggin system
 angular.module('app_synth')
-.controller('loginCtrl', function ($scope, $location, $http) {
+.controller('loginCtrl', function ($scope, $state, $http) {
 	$http.get('/api/login/IsLogged').then( function (res){
-		if(res.data == "true"){
-			$location.path('/people'); 
-			isLogged = true;
+		if(res.data.isLogged == true){
+			$state.go('article'); 
+			login.isLogged = true;
+			login.role = res.data.role;
 		}
 	});
 	$scope.title = "Login";
@@ -22,13 +23,14 @@ angular.module('app_synth')
 		}else{
 			$http.post('/api/login/LogfirstCo',({username: $scope.username, pwd: $scope.pwd})).then(function (res){
 				var check_co = res.data;
-				if (check_co == "true"){
-					isLogged = true;					
-					$location.path('/people');
+				if (check_co.isLogged == true){
+					login.isLogged = true;
+					login.role = check_co.role;	
+					$state.go('article'); 
 				}else{
 					$scope.result = "Wrong unsername or password";
 					$scope.hide_alert = false;
-					$scope.username ="";
+					$scope.username="";
 					$scope.pwd="";
 				}
 			});
@@ -45,20 +47,24 @@ angular.module('app_synth')
 	}
 })
 .controller('headerCtrl', function ($scope,$http,$location){
+	$scope.admin_hide = true;
+	if (login.role == "1"){
+		$scope.admin_hide = false;
+	}
+
 	$http.get('/api/login/IsLogged').then( function (res){
 		if(res.data == "false" || res.data == undefined)
 			$location.path('/');
 	});
 })
-.controller('footerCtrl', function ($scope, $http, $location){
+.controller('logoutCtrl', function ($scope, $http, $location){
 	$scope.hide_logout = true;
-	console.log('hei');
 	$http.get('/api/login/IsLogged').then( function (res){
-		if(res.data == "true"){
+		if(res.data.isLogged == true){
 			$scope.hide_logout = false;
 			$scope.logout = function(){
 				$scope.hide_logout = true;
-				isLogged = false;
+				login.isLogged = false;
 				$http.post('/api/login/Logout');
 				$location.path('/');
 			}

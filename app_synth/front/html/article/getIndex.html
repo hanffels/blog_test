@@ -1,0 +1,7 @@
+<header ng-include="'html/header.html'"></header>
+<h2>{{title}}</h2>
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="article in article">
+    <div class="content">{{article.id}} : {{article.name}}</div>
+  </li>
+</ul>

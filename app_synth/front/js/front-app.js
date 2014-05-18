@@ -1,14 +1,28 @@
-var dataLoaderRunnerPeople = ['dataLoaderPeople', function (dataLoaderPeople) {
-    return dataLoaderPeople();
+var dataLoaderRunnerArticle = ['dataLoaderArticle', function (dataLoaderArticle) {
+    return dataLoaderArticle();
   }
 ];
-var isLogged=false;
 
-angular.module('app_synth', ['ngRoute','ui.router'])
+var dataLoaderRunnerUsers = ['dataLoaderUsers', function (dataLoaderUsers) {
+    return dataLoaderUsers();
+  }
+];
+
+var dataLoaderRunnerRoles = ['dataLoaderRoles', function (dataLoaderRoles) {
+    return dataLoaderRoles();
+  }
+];
+
+var login={};
+
+angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
   .config(function ($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('people', {
-        url: '/people'
+      .state('article', {
+        url: '/article'
+      })
+      .state('user', {
+        url: '/user'
       })
       .state('contact', {
         url:'/contact'
@@ -22,11 +36,15 @@ angular.module('app_synth', ['ngRoute','ui.router'])
       templateUrl: '/html/login/login.html',
       controller: 'loginCtrl'
     })
-    .when('/people', {
-      templateUrl: '/html/people/getIndex.html',
-      controller: 'peopleController',
+    .when('/user', {
+      templateUrl: '/html/login/user.html',
+      controller: 'userCtrl',
+    })
+    .when('/article', {
+      templateUrl: '/html/article/getIndex.html',
+      controller: 'articleCtrl',
       resolve: {
-        data: dataLoaderRunnerPeople
+        data: dataLoaderRunnerArticle
       }
     })
     .when('/contact', {
@@ -34,24 +52,53 @@ angular.module('app_synth', ['ngRoute','ui.router'])
       controller: 'contactCtrl'
     })
     .when('/admin', {
-      templateUrl: 'html/people/post.html',
+      templateUrl: 'html/article/post.html',
       controller: 'postCtrl',
       resolve: {
-        data: dataLoaderRunnerPeople
+        data_articles: dataLoaderRunnerArticle,
+        data_users: dataLoaderRunnerUsers,
+        data_roles: dataLoaderRunnerRoles
       }
     })
     .otherwise('/');
+    
     $locationProvider.html5Mode(true);
   })
 
-.service('dataLoaderPeople', function ($location, $http) {
+.service('dataLoaderArticle', function ($location, $http) {
   return function () {
     if (preloadedData) {
       var data = preloadedData;
       preloadedData = null;
       return data;
     } else {
-      return $http.get( '/api/people' ).then(function (res) {
+      return $http.get( '/api/article' ).then(function (res) {
+        return res.data;
+      });
+    }
+  };
+})
+.service('dataLoaderUsers', function ($location, $http) {
+  return function () {
+    if (preloadedData) {
+      var data = preloadedData;
+      preloadedData = null;
+      return data;
+    } else {
+      return $http.get( '/api/login' ).then(function (res) {
+        return res.data;
+      });
+    }
+  };
+})
+.service('dataLoaderRoles', function ($location, $http) {
+  return function () {
+    if (preloadedData) {
+      var data = preloadedData;
+      preloadedData = null;
+      return data;
+    } else {
+      return $http.get( '/api/roles' ).then(function (res) {
         return res.data;
       });
     }

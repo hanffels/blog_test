@@ -6,19 +6,29 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title= 'My Application'
 
-    for cssFile in cssFiles
-      link(rel="stylesheet", href=cssFile)
+    link(rel="stylesheet", href="../bower_components/bootstrap/dist/css/bootstrap.css")
+    link(rel="stylesheet", href="css/main.css")
 
     // Preloaded Data
     script.
       var preloadedData = !{data};
-    for jsFile in jsFiles
-      script(src=jsFile)
-  body
-    div.container(ng-app="app_synth")
-      header(ng-include="'html/header.html'")
-      div.container(ng-view)
-      footer(ng-include="'html/footer.html'")
+
+    script(src="../bower_components/angular/angular.js")
+    script(src="../bower_components/angular-ui-router/release/angular-ui-router.js")
+    script(src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js")
+    script(src="../bower_components/jquery/dist/jquery.js")
+    script(src="../bower_components/bootstrap/dist/js/bootstrap.js")
+    script(src="../bower_components/angular-route/angular-route.js")
+    script(src="js/front-app.js")
+    script(src="js/controllers/articleCtrl.js")
+    script(src="js/controllers/contactCtrl.js")
+    script(src="js/controllers/adminCtrl.js")
+    script(src="js/controllers/loginCtrl.js")
+    script(src="js/controllers/userCtrl.js")
+
+  body(ng-app="app_synth")
+    div.container(ng-view)
+    footer(ng-include="'html/footer.html'")
 
     if preloadHTML
       script(type="text/ng-template", id="#{preloadHTMLPath}")

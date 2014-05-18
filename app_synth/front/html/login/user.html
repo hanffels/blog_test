@@ -1,0 +1,43 @@
+<header ng-include="'html/header.html'"></header>
+
+<div ng-hide="hide_alert_error" class="alert alert-danger alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	{{result}}
+</div>
+
+
+<div class="panel panel-primary">
+	<div class="panel-heading">Welcome : {{username}}!</div>
+	<div class="panel-body">
+		<div class="form-horizontal">
+			<label class="col-sm-2 control-label">Name</label>
+			<div class="col-sm-10">
+		      <input type="text" class="form-control" ng-model="name" >
+		    </div>
+		    <label class="col-sm-2 control-label">Firstname</label>
+			<div class="col-sm-10">
+		      <input type="text" class="form-control" ng-model="firstname">
+		    </div>
+		    <label class="col-sm-2 control-label">Role</label>
+			<div class="col-sm-10">
+		      <input type="text" class="form-control" disabled="disabled" ng-model="role">
+		    </div>
+		    <label class="col-sm-2 control-label">Password</label>
+			<div class="col-sm-10">
+		      <input ng-focus="confirm = false" type="password" class="form-control" ng-model="pwd">
+		    </div>
+		    <div ng-hide="confirm">
+			    <label class="col-sm-2 control-label">Confirm your password</label>
+				<div class="col-sm-10">
+			      <input type="password" class="form-control" ng-model="pwd_conf">
+			    </div>
+		    </div>
+		</div>
+		<button ng-click="save()" class="btn btn-primary" style="text-align:center;margin-top:2%;">Save your changes</button>
+	</div>
+</div>
+
+<div ng-hide="hide_alert_success" class="alert alert-success alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	{{result}}
+</div>

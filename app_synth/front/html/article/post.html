@@ -1,0 +1,15 @@
+<header ng-include="'html/header.html'"></header>
+<h2>{{title}}</h2>
+
+<div ng-hide="hide_alert" class="alert alert-success alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	{{result}}
+</div>
+<div>
+  <accordion close-others="true">
+  	<div ng-include="'html/article/admin_template.html'" ng-repeat="data in panels" ng-controller="adminCtrl" ng-init="init(data)">
+    </div>
+  </accordion>
+</div>
+<!--
+<div ng-include="'html/article/admin_template.html'" ng-repeat="data in panels" ng-controller="adminCtrl" ng-init="init(data)"></div>-->
