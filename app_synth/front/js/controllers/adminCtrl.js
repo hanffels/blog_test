@@ -1,6 +1,6 @@
 angular
 	.module('app_synth')
-	.controller('postCtrl', function ($scope, $http, $location, data_articles, data_users,data_roles){
+	.controller('postCtrl', function ($scope, $http,$route,  $location, data_articles, data_users,data_roles){
 		if(login.isLogged == false || login.isLogged == undefined)
 			$location.path('/');
 
@@ -12,13 +12,13 @@ angular
 			data: data_articles,
 			title : 'Articles',
 			api : 'article',
-			properties : ['id','name']
+			properties : ['id','title','content']
 		}
 		var users_admin = {
 			data: data_users,
 			title : 'Members',
 			api : 'login',
-			properties : ['username','role','name','firstname','pwd']
+			properties : ['id','username','role','name','firstname','pwd']
 		}
 		var roles_admin = {
 			data: data_roles,
@@ -39,7 +39,7 @@ angular
 		}
 	})
 
-	.controller('adminCtrl', function ($scope, $route, $http){
+	.controller('adminCtrl', function ($scope){
 		$scope.init = function(data){
 			$scope.items = data.data;
 			$scope.title = data.title;

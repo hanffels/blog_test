@@ -27,4 +27,20 @@ footer {
 
 .container{
 	margin-bottom: 2%;
+	width: 60%;
+}
+
+.dropdown-menu{
+	right:0;
+	left:-100px;
+}
+
+.hour_article{
+	background-color: white;
+	color: grey;
+
+}
+
+.img_in_art{
+	width: 50%;
 }

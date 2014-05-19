@@ -15,7 +15,6 @@ exports.getOneUser = function (req, res) {
 
   	return user;
 };
-
 exports.getIsLogged = function (req, res) {
 	var user = {};
 	user.isLogged = req.session.isLogged;
