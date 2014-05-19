@@ -1,9 +1,7 @@
 <ul ng-controller="headerCtrl" class="nav nav-pills pull-right">
 	<li ui-sref-active="active"><a ui-sref="article">Articles</a></li>
-	<li ng-hide="admin_hide" ui-sref-active="active"><a ui-sref="admin">Edit</a></li>
-
-
-
+	<li ui-sref-active="active"><a ui-sref="postArticle">Publish</a></li>
+  <li ng-hide="admin_hide" ui-sref-active="active"><a ui-sref="admin">Edit</a></li>
 	<!-- Single button -->
     <li class="btn-group" dropdown is-open="status.isopen">
       <a class="dropdown-toggle">

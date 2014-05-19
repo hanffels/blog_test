@@ -3,11 +3,17 @@ angular.module('app_synth')
 	if(login.isLogged == false || login.isLogged == undefined)
 		$location.path('/');
 
+	var sort = [];
+	for (var i = data.length - 1; i >= 0; i--) {
+		sort.push(data[i]);
+	};
+
+	data = sort;
 	var titles = [];
 	var images = [];
 
 	var slides = $scope.slides = [];
-	for (var i = 0; i < data.length; i++) {
+	for (var i = 0; i < 3; i++) {
 		slides.push({
 			title: data[i].title,
 			text: data[i].content.substr(0,50).replace(/$/,"..."),
@@ -29,9 +35,19 @@ angular.module('app_synth')
 		$scope.title = "Articles";
 	});
 })
-.controller('addArticleCtrl', function ($scope, $location) {
+.controller('addArticleCtrl', function ($scope, $location,$http) {
 	if(login.isLogged == false || login.isLogged == undefined)
 		$location.path('/');
 	
-	$scope.title = "Articles";
+	$scope.title = "Publish an article";
+
+	$scope.publish = function(){
+		var article = {};
+
+		article.title = $scope.title_article;
+		article.content = $scope.content_article;
+		article.image = $scope.url_article;
+
+		$http.post('/api/article/AddOneArticle', {content: article});
+	}
 });

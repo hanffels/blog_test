@@ -1,4 +1,4 @@
 angular.module('app_synth')
 .controller('contactCtrl', function ($scope, $location) {
-	$scope.contact = 'hey';
+	$scope.contact = 'It\'s me Mario' ;
 });

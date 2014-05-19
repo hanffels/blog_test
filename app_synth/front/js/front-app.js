@@ -21,6 +21,9 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
       .state('article', {
         url: '/article'
       })
+      .state('postArticle', {
+        url: '/postArticle'
+      })
       .state('user', {
         url: '/user'
       })
@@ -47,12 +50,17 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
         data: dataLoaderRunnerArticle
       }
     })
+    .when('/postArticle', {
+      templateUrl: '/html/article/postArticle.html',
+      controller: 'addArticleCtrl'
+    })
+
     .when('/contact', {
       templateUrl: 'html/contact.html',
       controller: 'contactCtrl'
     })
     .when('/admin', {
-      templateUrl: 'html/article/post.html',
+      templateUrl: 'html/article/admin.html',
       controller: 'postCtrl',
       resolve: {
         data_articles: dataLoaderRunnerArticle,

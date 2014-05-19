@@ -12,6 +12,7 @@ exports.postLogFirstCo = function (req, res) {
 			check_log_ok = true; 
 			role = logins[i].role;
 			username = logins[i].username;
+			id = logins[i].id;
 		}
 		i++;
 	}
@@ -19,6 +20,7 @@ exports.postLogFirstCo = function (req, res) {
 		req.session.isLogged = true;
 		req.session.role = role;
 		req.session.username = username;
+		req.session.user_id = id;
 		log.isLogged = true;
 		log.role = role;
 		res.send(log);

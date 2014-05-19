@@ -12,7 +12,7 @@ angular
 			data: data_articles,
 			title : 'Articles',
 			api : 'article',
-			properties : ['id','title','content']
+			properties : ['id','title','content','image','date_hour','user']
 		}
 		var users_admin = {
 			data: data_users,
