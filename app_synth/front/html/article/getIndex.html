@@ -1,6 +1,6 @@
 <header ng-include="'html/header.html'"></header>
 <h2>{{title}}</h2>
-<center><div style="width: 80%;margin-bottom:2%;">
+<center><div style="height: 450px; width: 80%;margin-bottom:2%;">
 	<carousel interval="5000">
 	  <slide ng-repeat="slide in slides" active="slide.active">
 	    <img style="width: 100%;" ng-src="{{slide.image}}" class="img-rounded" style="margin:auto;">
@@ -18,7 +18,11 @@
   	<span class="hour_article badge">{{article.date_hour}}</span>
     <h4 class="content">{{article.title}} : </h4>
     <img ng-src="{{article.image}}" style="float:left;margin-right:2%" class="img_in_art img-rounded">
-    <p>{{article.content}}</p>
-    <p style="clear:both" class="text- text-right text-muted"><i>Posted by : {{article.username}}</i></p>
+    <p>{{article.content.substr(0,480)+"..."}}</p>
+    <br style="clear:both; width:100%"/>
+    <div class="footer-article">
+	    <button class="btn btn-info btn-xs" ng-click="readmore($index)">Read more</button>
+	    <i class="float_right text-right text-muted" >Posted by : {{article.username}}</i>
+	</div>
   </li>
 </ul>

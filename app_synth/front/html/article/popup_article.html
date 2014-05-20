@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{article.title}}</h3>
+</div>
+<div class="modal-body">
+    <span class="float_right badge">{{article.date_hour}}</span>
+    <div ng-class="{popup_content: commenting}">
+        <img ng-src="{{article.image}}" 
+            style="float:left;margin-right:2%" 
+            ng-class="{img_in_art : !commenting,img_in_popup : commenting}" 
+            class="img-rounded">
+            <br ng-hide="!commenting" style="clear:both; width:100%"/>
+        <p style="padding-top:3%">{{article.content}}</p>
+        <div style="float:right;clear:both;">
+            <i class="text-right text-muted" >Posted by : {{article.username}}</i>
+        </div>
+    </div>
+    <div ng-hide="!commenting" style="margin-top:3%;" class="popup_comments">
+        {{no_comment}}
+        <div ng-repeat="comment in comments" style="margin-left:8%; width:100%; margin-bottom:2px;" class="panel panel-default">
+            <div style="height:30px;font-size:14px;padding:5px 10px;" class="panel-heading">
+                <span class="header_comment"><b>{{comment.user}}</b></span>
+                <span style="font-size:12px" class="date_comment float_right"><i>{{comment.date}}</i></span>
+            </div>
+            <div class="panel-body" style="padding:10px;">
+                <span class="content_comment">{{comment.content}}</span>
+            </div>
+        </div>
+        <div class="form-horizontal add_comment">
+            <input class="form-control" type="text" ng-model="new_comment.add">
+            <button class="float_right btn btn-sm btn-success" ng-click="addComment()">Publish</button>
+        </div>
+    </div>
+    <br style="clear:both; width:100%"/>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" style="float:left" ng-disabled="commenting" ng-click="comment()">Comment</button>
+    <button class="btn btn-primary" ng-click="close()">Close</button>
+</div>

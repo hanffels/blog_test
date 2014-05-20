@@ -12,6 +12,7 @@ synth.app.use(bodyParser());
 
 synth.app.use(function (req,res,next) {
 	req.url_article = 'back/files/article.json';
+    req.url_comments = 'back/files/comment.json';
 	req.url_logins = 'back/files/login.json';
 	req.url_roles = 'back/files/roles.json';
 	next();

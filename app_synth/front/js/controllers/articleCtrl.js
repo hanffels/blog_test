@@ -1,5 +1,5 @@
 angular.module('app_synth')
-.controller('articleCtrl', function ($scope,$location, $http, data) {
+.controller('articleCtrl', function ($scope,$location, $http, $modal, data) {
 	if(login.isLogged == false || login.isLogged == undefined)
 		$location.path('/');
 
@@ -34,7 +34,64 @@ angular.module('app_synth')
 		$scope.articles = data;
 		$scope.title = "Articles";
 	});
+
+
+	$scope.readmore = function (index) {
+
+	    var modalInstance = $modal.open({
+	      templateUrl: '/html/article/popup_article.html',
+	      controller: 'articlePopupCtrl',
+	      size: 'lg',
+	      resolve: {
+	        article: function () {
+	          return $scope.articles[index];
+	        }
+	      }
+	    });
+
+	    modalInstance.result.then(function (selectedItem) {
+	      $scope.selected = selectedItem;
+	    });
+	};
+
 })
+.controller('articlePopupCtrl', function ($scope, $modalInstance, $http, article) {
+	$scope.new_comment = {};
+  $scope.article = article;
+  $scope.comments = false;
+
+  $scope.close = function () {
+    $modalInstance.close();
+  };
+
+  $scope.comment = function () {
+    $scope.commenting = true;
+    $http.get('/api/comment?id_article='+$scope.article.id,{id_article: $scope.article.id}).then(function (res){
+    	if (res.data.length == 0){
+    		$scope.no_comment = 'No comments yet...';
+    	}else
+    		$scope.comments = res.data;
+    });
+  };
+
+  $scope.addComment = function(){
+  	if($scope.new_comment.add.trim() != ""){
+	  	$http.post('/api/comment/AddComment',{article: article, comment_text: $scope.new_comment.add});
+	  	$http.get('/api/comment?id_article='+$scope.article.id,{id_article: $scope.article.id}).then(function (res){
+	    	if (res.data.length == 0){
+	    		$scope.no_comment = 'No comments yet...';
+	    	}else{
+	    		$scope.comments = res.data;
+	    		$scope.no_comment = "";
+	    	}
+	    });
+	}	
+	else
+		alert('Enter something to comment');
+	$scope.new_comment.add = "";
+  }
+})
+
 .controller('addArticleCtrl', function ($scope, $location,$http) {
 	if(login.isLogged == false || login.isLogged == undefined)
 		$location.path('/');
