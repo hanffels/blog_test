@@ -1,7 +1,7 @@
 <header ng-include="'html/header.html'"></header>
 
 <div ng-hide="hide_alert_error" class="alert alert-danger alert-dismissable">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<button type="button" class="close" ng-click="hide_alert_error = true;">&times;</button>
 	{{result}}
 </div>
 
@@ -37,7 +37,24 @@
 	</div>
 </div>
 
+
+<div ng-hide = "admin_hide" class="panel panel-primary">
+	<div class="panel-heading">Contacts</div>
+	<div class="panel-body">
+		<div ng-repeat="question in contact" style="width:100%; margin-bottom:2px;" class="panel panel-default">
+            <div style="height:30px;font-size:14px;padding:5px 10px;" class="panel-heading">
+                <span popover="{{question.name}}" popover-trigger="mouseenter">by {{question.mail}}</span>
+                <span style="font-size:12px" class="date_comment float_right"><i>at {{question.date_hour}}</i></span>
+            </div>
+            <div class="panel-body" style="padding:10px;">
+                <span class="content_comment">{{question.text}}</span>
+                <button type="button" class="close" ng-click="contact.splice($index,1)">&times;</button>
+            </div>
+        </div>
+        <center><button type="button" class="btn btn-primary btn-sm" ng-click="save_contact()">Save</button></center>
+	</div>
+</div>
 <div ng-hide="hide_alert_success" class="alert alert-success alert-dismissable">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<button type="button" class="close" ng-click="hide_alert_success=true">&times;</button>
 	{{result}}
 </div>

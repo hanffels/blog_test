@@ -1,6 +1,6 @@
 angular
 	.module('app_synth')
-	.controller('postCtrl', function ($scope, $http,$route,  $location, data_articles, data_users,data_roles){
+	.controller('postCtrl', function ($scope, $http,$route,  $location, data_articles, data_users,data_roles,data_comment,data_contact){
 		if(login.isLogged == false || login.isLogged == undefined)
 			$location.path('/');
 
@@ -26,8 +26,20 @@ angular
 			api : 'roles',
 			properties : ['id','name']
 		}
+		var comment_admin = {
+			data: data_comment,
+			title : 'Comments',
+			api : 'comment',
+			properties : ['id','user','date','content']
+		}
+		var contact_admin = {
+			data: data_contact,
+			title : 'Contact',
+			api : 'contact',
+			properties : ['id','name','mail','text','date_hour']
+		}
 
-		$scope.panels = [articles_admin,users_admin,roles_admin];
+		$scope.panels = [articles_admin,users_admin,roles_admin,comment_admin,contact_admin];
 
 		$scope.save = function(api_name, contents){
 			$http.post('/api/'+api_name, {content: contents});

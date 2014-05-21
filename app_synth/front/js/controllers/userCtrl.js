@@ -1,5 +1,16 @@
 angular.module('app_synth')
 .controller('userCtrl', function ($scope, $http, $route){
+	$scope.admin_hide = true;
+	if (login.role == "1"){
+		$scope.admin_hide = false;
+
+		$http.get('/api/contact').then(function (res){
+			if(res.data == undefined || res.data.length == 0)
+				$scope.admin_hide = true;
+			else
+				$scope.contact = res.data;
+		});
+	}
 
 	$scope.hide_alert_error=true;
 	$scope.hide_alert_success=true;
@@ -17,7 +28,7 @@ angular.module('app_synth')
 		$scope.name = user.name;
 		$scope.firstname = user.firstname;
 		$scope.pwd = user.pwd;
-		$scope.conf_pwd = user.pwd;
+		$scope.pwd_conf = user.pwd;
 		$http.get('/api/roles').then(function (res){
 			var role =  res.data;
 			var role_name;
@@ -34,7 +45,7 @@ angular.module('app_synth')
 	});
 
 	$scope.save = function (){
-		if($scope.pwd != $scope.conf_pwd){
+		if($scope.pwd != $scope.pwd_conf){
 			$scope.hide_alert_error = false;
 			$scope.result= "Your passwords are incorrect";
 		}
@@ -50,5 +61,11 @@ angular.module('app_synth')
 			$scope.hide_alert_success = false;
 			$scope.result= "Changes have been made";
 		}
+	}
+
+	$scope.save_contact = function(){
+		$http.post('/api/contact', {content: $scope.contact});
+		$scope.hide_alert_success = false;
+		$scope.result= "Done ! ";
 	}
 });

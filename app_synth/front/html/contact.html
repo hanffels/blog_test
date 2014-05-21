@@ -1,1 +1,57 @@
-<h2>{{contact}}</h2>
+<h2>{{title}}</h2>
+<div class="panel panel-primary">
+	<div class="panel-heading">{{about}}</div>
+	<div class="panel-body">
+		<p>This is powered by OpenShift.</p>
+		<p>It was made with <a href="http://www.synthjs.com/">Synthjs</a> wich uses AngularJS and ExpressJS.</p>
+		<p>This site has no database, it only uses a file managment system in JSON.</p>
+	</div>
+</div>
+<div class="panel panel-primary">
+	<div class="panel-heading">{{contact}}</div>
+	<div class="panel-body form-horizontal">
+
+		<div ng-hide="error_name" class="alert alert-danger">
+		  <button type="button" class="close" ng-click="error_name=true">&times;</button>
+		  <p>You have to enter a name</p>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Your name : </label>
+			<div class="col-sm-10" style="maring-bottom:2%;">
+				<input type="text" class="form-control" ng-model="name" >
+		    </div>
+
+	    </div>
+	    <div ng-hide="error_mail" class="alert alert-danger">
+		  <button type="button" class="close" ng-click="error_mail=true">&times;</button>
+		  <p>You have to enter a e-mail adress</p>
+		</div>
+
+	    <div class="form-group">
+		    <label class="col-sm-2 control-label">Your e-mail : </label>
+			<div class="col-sm-10">
+				<input type="mail" class="form-control" ng-model="mail" >
+		    </div>
+	    </div>
+	    <div ng-hide="error_text" class="alert alert-danger">
+		  <button type="button" class="close" ng-click="error_text=true">&times;</button>
+		  <p>You have to enter a question</p>
+		</div>
+
+	    <div class="form-group">
+		    <label class="col-sm-2 control-label">Your question : </label>
+			<div class="col-sm-10">
+				<textarea class="form-control" ng-model="text_question" rows="10" cols="50"></textarea>
+		    </div>
+	    </div>
+
+	    <div ng-hide="success" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <p>Done. The owner will answer you as soon as possible.</p>
+		</div>
+
+	</div>
+</div>
+
+<button class="btn btn-primary" ng-click="send()">Send</button>

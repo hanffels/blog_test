@@ -11,3 +11,8 @@ exports.getIndex = function (req,res){
 	};
 	return article_comments;
 };
+
+exports.getAll = function (req, res) {
+	var fs = require('fs');
+  	return JSON.parse(fs.readFileSync(req.url_comments, 'utf8'));
+};

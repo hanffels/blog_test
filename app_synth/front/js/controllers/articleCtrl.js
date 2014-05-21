@@ -105,6 +105,10 @@ angular.module('app_synth')
 		article.content = $scope.content_article;
 		article.image = $scope.url_article;
 
+		$scope.title_article = "";
+		$scope.content_article = "";
+		$scope.url_article = "";
 		$http.post('/api/article/AddOneArticle', {content: article});
+		$location.path('/');
 	}
 });

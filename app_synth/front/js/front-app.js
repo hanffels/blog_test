@@ -13,6 +13,18 @@ var dataLoaderRunnerRoles = ['dataLoaderRoles', function (dataLoaderRoles) {
   }
 ];
 
+var dataLoaderRunnerComment = ['dataLoaderComment', function (dataLoaderComment) {
+    return dataLoaderComment();
+  }
+];
+
+
+var dataLoaderRunnerContact = ['dataLoaderContact', function (dataLoaderContact) {
+    return dataLoaderContact();
+  }
+];
+
+
 var login={};
 
 angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
@@ -65,7 +77,9 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
       resolve: {
         data_articles: dataLoaderRunnerArticle,
         data_users: dataLoaderRunnerUsers,
-        data_roles: dataLoaderRunnerRoles
+        data_roles: dataLoaderRunnerRoles,
+        data_comment: dataLoaderRunnerComment,
+        data_contact: dataLoaderRunnerContact
       }
     })
     .otherwise('/');
@@ -94,6 +108,32 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
       return data;
     } else {
       return $http.get( '/api/login' ).then(function (res) {
+        return res.data;
+      });
+    }
+  };
+})
+.service('dataLoaderComment', function ($location, $http) {
+  return function () {
+    if (preloadedData) {
+      var data = preloadedData;
+      preloadedData = null;
+      return data;
+    } else {
+      return $http.get( '/api/comment/All' ).then(function (res) {
+        return res.data;
+      });
+    }
+  };
+})
+.service('dataLoaderContact', function ($location, $http) {
+  return function () {
+    if (preloadedData) {
+      var data = preloadedData;
+      preloadedData = null;
+      return data;
+    } else {
+      return $http.get( '/api/contact' ).then(function (res) {
         return res.data;
       });
     }
