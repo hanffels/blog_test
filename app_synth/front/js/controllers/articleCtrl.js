@@ -38,6 +38,11 @@ angular.module('app_synth')
 		});
 	});
 
+
+	$scope.isActive = function (viewLocation) { 
+        return viewLocation === $location.path();
+    };
+    
 	$http.get('/api/categories').then(function (res) {
 		$scope.searchCat = {};
 		$scope.categories = res.data;
@@ -62,6 +67,8 @@ angular.module('app_synth')
 	};
 
 })
+
+
 .controller('articlePopupCtrl', function ($scope, $modalInstance, $http, article) {
   $scope.new_comment = {};
   $scope.article = article;
@@ -75,10 +82,16 @@ angular.module('app_synth')
   $scope.comment = function () {
     $scope.commenting = true;
     $http.get('/api/comment?id_article='+$scope.article.id,{id_article: $scope.article.id}).then(function (res){
+    	var data = [];
+
+    	for (var i = res.data.length - 1; i >= 0; i--) {
+    		data.push(res.data[i])
+    	};
+
     	if (res.data.length == 0){
     		$scope.no_comment = 'No comments yet...';
     	}else
-    		$scope.comments = res.data;
+    		$scope.comments = data;
     });
 
     if (login.role == "1"){
@@ -113,22 +126,36 @@ angular.module('app_synth')
 	if(login.isLogged == false || login.isLogged == undefined)
 		$location.path('/');
 	
+	$scope.error = true;
 	$scope.title = "Publish an article";
 	$scope.success = true;
+	$http.get('/api/categories').then(function (res){
+		$scope.categories = res.data;
+	});
 
 	$scope.publish = function(){
 		var article = {};
+		$scope.error = true;
+		$scope.success = true;
+		if($scope.title_article == undefined || $scope.title_article.trim() == ""
+			|| $scope.content_article == undefined || $scope.content_article.trim() == ""
+			|| $scope.url_article == undefined || $scope.url_article.trim() == ""
+			|| $scope.categ == undefined){
+			$scope.error = false;
+		}else{
+			article.title = $scope.title_article;
+			article.content = $scope.content_article;
+			article.image = $scope.url_article;
+			article.categories = $scope.categ;
+			article.status = 0;
 
-		article.title = $scope.title_article;
-		article.content = $scope.content_article;
-		article.image = $scope.url_article;
-		article.status = 0;
-
-		$scope.title_article = "";
-		$scope.content_article = "";
-		$scope.url_article = "";
-		$http.post('/api/article/AddOneArticle', {content: article});
-		
-		$scope.success = false;
+			$scope.title_article = "";
+			$scope.content_article = "";
+			$scope.url_article = "";
+			//console.log(article);
+			$http.post('/api/article/AddOneArticle', {content: article});
+			
+			$scope.success = false;
+		}
 	}
 });

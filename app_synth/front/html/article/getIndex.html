@@ -1,6 +1,6 @@
 <header ng-include="'html/header.html'"></header>
 <h2>{{title}}</h2>
-<center><div class="hidden-xs" style="height:45vh; margin-bottom:2%;">
+<center><div class="hidden-xs" style="margin-bottom:2%;">
 	<carousel style="width:65%" interval="5000">
 	  <slide ng-repeat="slide in slides" active="slide.active">
 	    <img style="height:auto; width:100%;" ng-src="{{slide.image}}" class="img-rounded" style="margin:auto;">
@@ -15,8 +15,8 @@
 <ul class="list-group">
 	<li class="list-group-item">
 		<ul class="nav nav-tabs">
-			<li><a ng-click="searchCat.categories=$">All</a></li>
-		    <li ng-repeat="cat in categories"><a class="active" ng-click="searchCat.categories=cat.id" href="#">{{cat.name}}</a></li>
+			<li><a ng-click="searchCat.categories=$" href="#">All</a></li>
+		    <li ng-repeat="cat in categories"><a ng-click="searchCat.categories=cat.id" href="#">{{cat.name}}</a></li>
 		</ul>
 	</li>
   <li class="list-group-item" ng-repeat="article in articles | filter:searchCat">

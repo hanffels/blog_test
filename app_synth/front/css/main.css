@@ -50,20 +50,26 @@ footer {
 
 .popup_content{
 	width:60%;
-	height:400px;
+	height:100%;
 	padding-right:1%;
 	border-right:1px solid white;
 	float:left;
 }
 .popup_comments{
-	width:35%;
+	margin-top:3%; 
+	margin-left:5%;
+
+	width:31%;
 	float:left;
+	height:100%;
+	max-height:500px;
+	overflow:auto;
 }
 
+.popup_comments::-webkit-scrollbar { 
+    display: none; 
+}
 
 .add_comment{
-	position:absolute;
-	bottom:0;
-	width:32%;
-	margin:3%;
+	float:right;
 }
