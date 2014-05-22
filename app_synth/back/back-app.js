@@ -16,6 +16,7 @@ synth.app.use(function (req,res,next) {
 	req.url_logins = 'back/files/login.json';
 	req.url_roles = 'back/files/roles.json';
     req.url_contact = 'back/files/contact.json';
+    req.url_categories = 'back/files/categories.json';
 	next();
 });
 

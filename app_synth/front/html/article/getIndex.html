@@ -1,20 +1,25 @@
 <header ng-include="'html/header.html'"></header>
 <h2>{{title}}</h2>
-<center><div style="height: 45vh; width: 80%;margin-bottom:2%;">
-	<carousel interval="5000">
+<center><div class="hidden-xs" style="height:45vh; margin-bottom:2%;">
+	<carousel style="width:65%" interval="5000">
 	  <slide ng-repeat="slide in slides" active="slide.active">
-	    <img style="width: 100%;" ng-src="{{slide.image}}" class="img-rounded" style="margin:auto;">
+	    <img style="height:auto; width:100%;" ng-src="{{slide.image}}" class="img-rounded" style="margin:auto;">
 	    <div class="carousel-caption">
 	      <h4>{{slide.title}}</h4>
 	      <p>{{slide.text}}</p>
 	    </div>
 	  </slide>
 	</carousel>
-</div>
-</center>
+</div></center>
 
 <ul class="list-group">
-  <li class="list-group-item" ng-repeat="article in articles">
+	<li class="list-group-item">
+		<ul class="nav nav-tabs">
+			<li><a ng-click="searchCat.categories=$">All</a></li>
+		    <li ng-repeat="cat in categories"><a class="active" ng-click="searchCat.categories=cat.id" href="#">{{cat.name}}</a></li>
+		</ul>
+	</li>
+  <li class="list-group-item" ng-repeat="article in articles | filter:searchCat">
   	<span class="hour_article badge">{{article.date_hour}}</span>
     <h4 class="content">{{article.title}} : </h4>
     <img ng-src="{{article.image}}" style="float:left;margin-right:2%" class="img_in_art img-rounded">

@@ -2,6 +2,7 @@
 	<li ui-sref-active="active"><a ui-sref="article">Articles</a></li>
 	<li ui-sref-active="active"><a ui-sref="postArticle">Publish</a></li>
   <li ng-hide="admin_hide" ui-sref-active="active"><a ui-sref="admin">Edit</a></li>
+  <li ng-hide="admin_hide" ui-sref-active="active"><a ui-sref="moderation">Moderation</a></li>
 	<!-- Single button -->
     <li class="btn-group" dropdown is-open="status.isopen">
       <a class="dropdown-toggle">
@@ -13,7 +14,7 @@
 		<li><a ng-controller="logoutCtrl"  class="btn" ng-click="logout()" href="#"><p class="text-danger">Logout</p></a></li>
       </ul>
     </li>
-
 </ul>
-<h3 class="text-muted">My Site</h3>
+<h3 class="text-muted"><b>W. H. A.</b></h3>
+<h5 class="text-info">&nbsp;&nbsp;<i>What You Hear Is Awesome</i></h5>
 <hr/>

@@ -18,12 +18,15 @@ var dataLoaderRunnerComment = ['dataLoaderComment', function (dataLoaderComment)
   }
 ];
 
-
 var dataLoaderRunnerContact = ['dataLoaderContact', function (dataLoaderContact) {
     return dataLoaderContact();
   }
 ];
 
+var dataLoaderRunnerCategories = ['dataLoaderCategories', function (dataLoaderCategories) {
+    return dataLoaderCategories();
+  }
+];
 
 var login={};
 
@@ -35,6 +38,9 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
       })
       .state('postArticle', {
         url: '/postArticle'
+      })
+      .state('moderation', {
+        url: '/moderation'
       })
       .state('user', {
         url: '/user'
@@ -51,16 +57,17 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
       templateUrl: '/html/login/login.html',
       controller: 'loginCtrl'
     })
+    .when('/moderation', {
+      templateUrl: '/html/admin/moderation.html',
+      controller: 'moderationCtrl'
+    })
     .when('/user', {
       templateUrl: '/html/login/user.html',
       controller: 'userCtrl',
     })
     .when('/article', {
       templateUrl: '/html/article/getIndex.html',
-      controller: 'articleCtrl',
-      resolve: {
-        data: dataLoaderRunnerArticle
-      }
+      controller: 'articleCtrl'
     })
     .when('/postArticle', {
       templateUrl: '/html/article/postArticle.html',
@@ -72,14 +79,15 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
       controller: 'contactCtrl'
     })
     .when('/admin', {
-      templateUrl: 'html/article/admin.html',
-      controller: 'postCtrl',
+      templateUrl: 'html/admin/admin.html',
+      controller: 'adminGlobalCtrl',
       resolve: {
         data_articles: dataLoaderRunnerArticle,
         data_users: dataLoaderRunnerUsers,
         data_roles: dataLoaderRunnerRoles,
         data_comment: dataLoaderRunnerComment,
-        data_contact: dataLoaderRunnerContact
+        data_contact: dataLoaderRunnerContact,
+        data_categories: dataLoaderRunnerCategories
       }
     })
     .otherwise('/');
@@ -134,6 +142,19 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
       return data;
     } else {
       return $http.get( '/api/contact' ).then(function (res) {
+        return res.data;
+      });
+    }
+  };
+})
+.service('dataLoaderCategories', function ($location, $http) {
+  return function () {
+    if (preloadedData) {
+      var data = preloadedData;
+      preloadedData = null;
+      return data;
+    } else {
+      return $http.get( '/api/categories' ).then(function (res) {
         return res.data;
       });
     }

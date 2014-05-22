@@ -15,7 +15,7 @@
         </div>
     </div>
     <div ng-hide="!commenting" style="margin-top:3%;" class="popup_comments">
-        {{no_comment}}
+        <center>{{no_comment}}</center>
         <div ng-repeat="comment in comments" style="margin-left:8%; width:100%; margin-bottom:2px;" class="panel panel-default">
             <div style="height:30px;font-size:14px;padding:5px 10px;" class="panel-heading">
                 <span class="header_comment"><b>{{comment.user}}</b></span>
@@ -23,6 +23,7 @@
             </div>
             <div class="panel-body" style="padding:10px;">
                 <span class="content_comment">{{comment.content}}</span>
+                <button type="button" class="close" ng-hide="admin_hide" ng-click="removeComment($index)">&times;</button>
             </div>
         </div>
         <div class="form-horizontal add_comment">

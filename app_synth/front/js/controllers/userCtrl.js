@@ -1,17 +1,5 @@
 angular.module('app_synth')
 .controller('userCtrl', function ($scope, $http, $route){
-	$scope.admin_hide = true;
-	if (login.role == "1"){
-		$scope.admin_hide = false;
-
-		$http.get('/api/contact').then(function (res){
-			if(res.data == undefined || res.data.length == 0)
-				$scope.admin_hide = true;
-			else
-				$scope.contact = res.data;
-		});
-	}
-
 	$scope.hide_alert_error=true;
 	$scope.hide_alert_success=true;
 
@@ -24,6 +12,7 @@ angular.module('app_synth')
 
 		$scope.confirm = true;
 
+		$scope.id = user.id;
 		$scope.username = user.username;
 		$scope.name = user.name;
 		$scope.firstname = user.firstname;
@@ -51,6 +40,7 @@ angular.module('app_synth')
 		}
 		else{
 			var user = {};
+			user.id = $scope.id;
 			user.username = $scope.username;
 			user.name = $scope.name;
 			user.firstname = $scope.firstname;
@@ -61,11 +51,5 @@ angular.module('app_synth')
 			$scope.hide_alert_success = false;
 			$scope.result= "Changes have been made";
 		}
-	}
-
-	$scope.save_contact = function(){
-		$http.post('/api/contact', {content: $scope.contact});
-		$scope.hide_alert_success = false;
-		$scope.result= "Done ! ";
 	}
 });

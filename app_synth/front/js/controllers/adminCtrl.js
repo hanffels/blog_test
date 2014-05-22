@@ -1,6 +1,6 @@
 angular
 	.module('app_synth')
-	.controller('postCtrl', function ($scope, $http,$route,  $location, data_articles, data_users,data_roles,data_comment,data_contact){
+	.controller('adminGlobalCtrl', function ($scope, $http, $route,  $location, data_categories, data_articles, data_users,data_roles,data_comment,data_contact){
 		if(login.isLogged == false || login.isLogged == undefined)
 			$location.path('/');
 
@@ -12,7 +12,7 @@ angular
 			data: data_articles,
 			title : 'Articles',
 			api : 'article',
-			properties : ['id','title','content','image','date_hour','user']
+			properties : ['id','title','content','image','date_hour','user','status','categories']
 		}
 		var users_admin = {
 			data: data_users,
@@ -38,8 +38,14 @@ angular
 			api : 'contact',
 			properties : ['id','name','mail','text','date_hour']
 		}
+		var categories_admin = {
+			data: data_categories,
+			title : 'Categories',
+			api : 'categories',
+			properties : ['id','name']
+		}
 
-		$scope.panels = [articles_admin,users_admin,roles_admin,comment_admin,contact_admin];
+		$scope.panels = [articles_admin,users_admin,roles_admin,comment_admin,contact_admin,categories_admin];
 
 		$scope.save = function(api_name, contents){
 			$http.post('/api/'+api_name, {content: contents});
@@ -51,11 +57,44 @@ angular
 		}
 	})
 
-	.controller('adminCtrl', function ($scope){
+	.controller('adminPanelsCtrl', function ($scope){
 		$scope.init = function(data){
 			$scope.items = data.data;
 			$scope.title = data.title;
 			$scope.api = data.api;
 			$scope.properties = data.properties;
 		};
+	})
+
+	.controller('moderationCtrl', function ($scope, $http, $location){
+		$scope.title = 'Moderation';
+		$scope.hide_alert_success_com=true;
+		$scope.hide_alert_success_art=true;
+
+		$http.get('/api/article').then(function (res){
+			if(res.data == undefined || res.data.length == 0)
+				$scope.admin_hide = true;
+			else
+				$scope.articles = res.data;
+		});
+
+
+		$http.get('/api/contact').then(function (res){
+			if(res.data == undefined || res.data.length == 0)
+				$scope.admin_hide = true;
+			else
+				$scope.contact = res.data;
+		});
+
+		$scope.save_contact = function(){
+			$http.post('/api/contact', {content: $scope.contact});
+			$scope.hide_alert_success_com = false;
+			$scope.result_contacts= "Done ! ";
+		}
+
+		$scope.save_art = function(){
+			$http.post('/api/article', {content: $scope.articles});
+			$scope.hide_alert_success_art = false;
+			$scope.result_articles= "Done ! ";
+		}
 	});

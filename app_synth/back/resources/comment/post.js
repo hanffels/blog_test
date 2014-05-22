@@ -25,3 +25,15 @@ exports.postAddComment = function (req,res){
 	data.push(article_comment);
 	return fs.writeFileSync(req.url_comments, JSON.stringify(data), "UTF-8");
 };
+
+
+exports.postRemoveOne = function (req,res){
+	var fs =require('fs');
+	var data = JSON.parse(fs.readFileSync(req.url_comments, 'utf8'));
+	
+	for (var i = 0; i < data.length; i++) {
+		if(data[i].id == req.body.content.id)
+			data.splice(i,1);
+	};
+	return fs.writeFileSync(req.url_comments, JSON.stringify(data), "UTF-8");
+};

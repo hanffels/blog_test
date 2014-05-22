@@ -4,14 +4,23 @@ html
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title= 'My Application'
+    title= 'WhatYouHearIsAwesome'
 
     link(rel="stylesheet", href="../bower_components/bootstrap/dist/css/bootstrap.min.css")
     link(rel="stylesheet", href="css/main.css")
 
     // Preloaded Data
     script.
-      var preloadedData = !{data};
+        var preloadedData = !{data};
+
+  body(ng-app="app_synth")
+    div.col-lg-2
+    div.container.col-xs-12.col-lg-8(ng-view)
+    footer(ng-include="'html/footer.html'")
+
+    if preloadHTML
+      script(type="text/ng-template", id="#{preloadHTMLPath}")
+        != preloadHTML
 
     script(src="../bower_components/angular/angular.js")
     script(src="../bower_components/angular-ui-router/release/angular-ui-router.js")
@@ -25,11 +34,3 @@ html
     script(src="js/controllers/adminCtrl.js")
     script(src="js/controllers/loginCtrl.js")
     script(src="js/controllers/userCtrl.js")
-
-  body(ng-app="app_synth")
-    div.container(ng-view)
-    footer(ng-include="'html/footer.html'")
-
-    if preloadHTML
-      script(type="text/ng-template", id="#{preloadHTMLPath}")
-        != preloadHTML
