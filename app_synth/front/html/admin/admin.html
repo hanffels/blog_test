@@ -7,7 +7,8 @@
 </div>
 <div>
   <accordion close-others="true">
-  	<div ng-include="'html/admin/admin_template.html'" ng-repeat="data in panels" ng-controller="adminPanelsCtrl" ng-init="init(data)">
+  	<div ng-include="'html/admin/admin_template.html'" ng-repeat="data in panels" 
+  	ng-controller="adminPanelsCtrl" ng-init="init(data)">
     </div>
   </accordion>
 </div>

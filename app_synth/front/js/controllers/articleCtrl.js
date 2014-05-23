@@ -1,8 +1,5 @@
 angular.module('app_synth')
 .controller('articleCtrl', function ($scope,$location, $http, $modal) {
-	if(login.isLogged == false || login.isLogged == undefined)
-		$location.path('/');
-
 	$http.get('/api/article/Checked').then(function (res){
 		var data = res.data;
 		var sort = [];
@@ -10,32 +7,32 @@ angular.module('app_synth')
 			sort.push(data[i]);
 		};
 		data = sort;
-
+		console.log(data);
 		var titles = [];
 		var images = [];
-
-		var slides = $scope.slides = [];
-		for (var i = 0; i < 3; i++) {
-			slides.push({
-				title: data[i].title,
-				text: data[i].content.substr(0,50).replace(/$/,"..."),
-				image : data[i].image
-			});
-		};
-		$http.get('/api/login').then(function (res){
-			users = res.data;
-
-			for (var i = 0; i < data.length; i++) {
-				for (var j = 0; j < users.length; j++) {
-					if(users[j].id == data[i].user){
-						data[i].username = users[j].username;
-					}
-				};
+		if (data.length != 0){
+			var slides = $scope.slides = [];
+			for (var i = 0; i < 3 && i<data.length; i++) {
+				slides.push({
+					title: data[i].title,
+					text: data[i].content.substr(0,50).replace(/$/,"..."),
+					image : data[i].image
+				});
 			};
-			//console.log(data);
-			$scope.articles = data;
-			$scope.title = "Articles";
-		});
+			$http.get('/api/login').then(function (res){
+				users = res.data;
+
+				for (var i = 0; i < data.length; i++) {
+					for (var j = 0; j < users.length; j++) {
+						if(users[j].id == data[i].user){
+							data[i].username = users[j].username;
+						}
+					};
+				};
+				$scope.articles = data;
+			});
+		}
+		$scope.title = "Articles";
 	});
 
 
@@ -74,6 +71,7 @@ angular.module('app_synth')
   $scope.article = article;
   $scope.comments = false;
   $scope.admin_hide = true;
+  $scope.add_comment_hide = true;
 
   $scope.close = function () {
     $modalInstance.close();
@@ -81,6 +79,9 @@ angular.module('app_synth')
 
   $scope.comment = function () {
     $scope.commenting = true;
+    if(login.isLogged == true && login.isLogged != undefined){
+    	$scope.add_comment_hide = false;
+	}
     $http.get('/api/comment?id_article='+$scope.article.id,{id_article: $scope.article.id}).then(function (res){
     	var data = [];
 
@@ -105,27 +106,35 @@ angular.module('app_synth')
   };
 
   $scope.addComment = function(){
-  	if($scope.new_comment.add.trim() != ""){
-	  	$http.post('/api/comment/AddComment',{article: article, comment_text: $scope.new_comment.add});
-	  	$http.get('/api/comment?id_article='+$scope.article.id,{id_article: $scope.article.id}).then(function (res){
-	    	if (res.data.length == 0){
-	    		$scope.no_comment = 'No comments yet...';
-	    	}else{
-	    		$scope.comments = res.data;
-	    		$scope.no_comment = "";
-	    	}
-	    });
-	}	
-	else
-		alert('Enter something to comment');
-	$scope.new_comment.add = "";
-  }
+	  	if($scope.new_comment.add.trim() != ""){
+		  	$http.post('/api/comment/AddComment',{article: article, comment_text: $scope.new_comment.add});
+		  	$http.get('/api/comment?id_article='+$scope.article.id,{id_article: $scope.article.id}).then(function (res){
+		    	if (res.data.length == 0){
+		    		$scope.no_comment = 'No comments yet...';
+		    	}else{
+		    		var data = [];
+
+			    	for (var i = res.data.length - 1; i >= 0; i--) {
+			    		data.push(res.data[i])
+			    	};
+		    		$scope.comments = data;
+		    		$scope.no_comment = "";
+		    	}
+		    });
+		}	
+		else
+			alert('Enter something to comment');
+		$scope.new_comment.add = "";
+	}
 })
 
 .controller('addArticleCtrl', function ($scope, $location,$http) {
 	if(login.isLogged == false || login.isLogged == undefined)
 		$location.path('/');
 	
+	$scope.editorOptions = {
+	};
+
 	$scope.error = true;
 	$scope.title = "Publish an article";
 	$scope.success = true;
@@ -144,7 +153,7 @@ angular.module('app_synth')
 			$scope.error = false;
 		}else{
 			article.title = $scope.title_article;
-			article.content = $scope.content_article;
+			article.content =  $scope.content_article;
 			article.image = $scope.url_article;
 			article.categories = $scope.categ;
 			article.status = 0;
@@ -152,8 +161,8 @@ angular.module('app_synth')
 			$scope.title_article = "";
 			$scope.content_article = "";
 			$scope.url_article = "";
-			//console.log(article);
-			$http.post('/api/article/AddOneArticle', {content: article});
+			console.log(article);
+			//$http.post('/api/article/AddOneArticle', {content: article});
 			
 			$scope.success = false;
 		}

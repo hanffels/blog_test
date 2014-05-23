@@ -1,5 +1,5 @@
 exports.postLogFirstCo = function (req, res) {
-	console.log('logging');
+	console.log('Log : '+req.body.username);
 	var fs = require('fs');
 	var logins = JSON.parse(fs.readFileSync(req.url_logins, 'utf8'));
 

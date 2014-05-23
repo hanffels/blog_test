@@ -30,7 +30,7 @@ var dataLoaderRunnerCategories = ['dataLoaderCategories', function (dataLoaderCa
 
 var login={};
 
-angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
+angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap','ngCkeditor'])
   .config(function ($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('article', {
@@ -42,11 +42,17 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
       .state('moderation', {
         url: '/moderation'
       })
+      .state('log_in', {
+        url: '/'
+      })
       .state('user', {
         url: '/user'
       })
       .state('contact', {
         url:'/contact'
+      })
+      .state('infos', {
+        url:'/infos'
       })
       .state('admin', {
         url:'/admin'
@@ -60,6 +66,10 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap'])
     .when('/moderation', {
       templateUrl: '/html/admin/moderation.html',
       controller: 'moderationCtrl'
+    })
+    .when('/infos', {
+      templateUrl: '/html/info.html',
+      controller: 'infoCtrl'
     })
     .when('/user', {
       templateUrl: '/html/login/user.html',

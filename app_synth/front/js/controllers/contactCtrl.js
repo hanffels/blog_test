@@ -5,8 +5,7 @@ angular.module('app_synth')
 	$scope.error_name = true;
 	$scope.error_mail = true;
 	$scope.contact = 'Do you want to contact me ?' ;
-	$scope.title = 'About'
-	$scope.about = 'About the web site';
+	$scope.title = 'Contact'
 
 	$scope.send = function() {
 		$scope.error_text = true;
@@ -40,4 +39,8 @@ angular.module('app_synth')
 			}
 		}
 	}
+})
+.controller('infoCtrl', function ($scope){
+	$scope.title = 'About'
+	$scope.about = 'About the web site';
 });

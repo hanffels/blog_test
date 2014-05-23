@@ -8,13 +8,30 @@ h1 {
 }
 
 footer {
+	border-radius: 5px;
+	padding:1%;
+	padding-bottom:3%;
+	opacity: 0.8; 
+	/*background-color: #3a3f44;*/
+	background-image: linear-gradient(to right, #272b30, #32383e, #272b30);
 	position:fixed;
 	bottom:0;
-	width:100%;
+	width:80%;
+	margin-left:10%;
+	margin-right:10%;
 	text-align: center;
 	height: 5%;
 }
 
+.ta-editor {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    margin:20px 0;
+ }
+ 
 .float_right{
 	float:right;
 }
@@ -49,21 +66,14 @@ footer {
 }
 
 .popup_content{
-	width:60%;
 	height:100%;
 	padding-right:1%;
-	border-right:1px solid white;
-	float:left;
+	padding-bottom:2%;
 }
 .popup_comments{
-	margin-top:3%; 
-	margin-left:5%;
-
-	width:31%;
-	float:left;
-	height:100%;
-	max-height:500px;
+	max-height : 400px;
 	overflow:auto;
+	margin-top:3%; 
 }
 
 .popup_comments::-webkit-scrollbar { 

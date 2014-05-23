@@ -4,21 +4,22 @@
 </div>
 <div class="modal-body">
     <span class="float_right badge">{{article.date_hour}}</span>
-    <div ng-class="{popup_content: commenting}">
+    <div class="col-sm-12" ng-class="{popup_content: commenting, 'col-lg-6': commenting , 'col-lg-12': !commenting}">
         <img ng-src="{{article.image}}" 
             style="float:left;margin-right:2%" 
             ng-class="{img_in_art : !commenting,img_in_popup : commenting}" 
             class="img-rounded">
             <br ng-hide="!commenting" style="clear:both; width:100%"/>
         <p style="padding-top:3%">{{article.content}}</p>
-        <div style="float:right;clear:both;">
+        <br style="clear:both; width:100%"/>
+        <div style="clear:both; position:absolute; bottom:0; right:0;">
             <i class="text-right text-muted" >Posted by : {{article.username}}</i>
         </div>
     </div>
-    <div ng-hide="!commenting" class="popup_comments">
+    <div ng-hide="!commenting" class="col-lg-6 col-sm-12 popup_comments">
         <center>{{no_comment}}</center>
-        <div ng-repeat="comment in comments" style="width:100%; margin-bottom:2px;" class="panel panel-default">
-            <div style="height:30px;font-size:14px;padding:5px 10px;" class="panel-heading">
+        <div ng-repeat="comment in comments" style="width:100%;padding:0;" class="panel panel-default">
+            <div class="panel-heading">
                 <span class="header_comment"><b>{{comment.user}}</b></span>
                 <span style="font-size:12px" class="date_comment float_right"><i>{{comment.date}}</i></span>
             </div>
@@ -32,7 +33,7 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" style="float:left" ng-disabled="commenting" ng-click="comment()">Comment</button>
-    <div ng-hide="!commenting" class="col-lg-5 form-horizontal add_comment">
+    <div ng-hide="add_comment_hide" class="col-lg-5 form-horizontal add_comment">
         <input class="form-control" type="text" ng-model="new_comment.add">
         <button class="float_right btn btn-sm btn-success" ng-click="addComment()">Publish</button>
     </div>

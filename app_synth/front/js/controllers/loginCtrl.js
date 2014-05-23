@@ -11,7 +11,9 @@ angular.module('app_synth')
 	$scope.title = "Login";
 	$scope.hide_alert = true;
 
-	//Hide the error display
+	$scope.log_unreg = function (){
+		$state.go('article');
+	}
 	$scope.log = function (){
 		$scope.hide_alert = true;
 		if ($scope.pwd == undefined 
@@ -33,25 +35,26 @@ angular.module('app_synth')
 					$scope.username="";
 					$scope.pwd="";
 				}
-			});
-
-			//
-			/*var check_log_ok;
-
-			$http.post('/api/login/LogFirstCo', {username: $scope.username, pwd: $scope.pwd})
-			.then(function (res){
-				console.log(res);
-			});*/
-			
+			});			
 		}
 	}
 })
 .controller('headerCtrl', function ($scope,$http,$location){
+	$scope.guest_hide = true;
 	$scope.admin_hide = true;
-	if (login.role == "1"){
+	if(login.isLogged == undefined || login.isLogged == false)
+		$scope.guest_hide = true;
+	else
+		$scope.guest_hide = false;
+
+	if (login.role == "1" && login.isLogged != false){
 		$scope.admin_hide = false;
 	}
+	else
+		$scope.admin_hide = true;
 
+	//console.log($scope.admin_hide+" - "+$scope.guest_hide);
+	//console.log(login.isLogged == undefined);
 	$http.get('/api/login/IsLogged').then( function (res){
 		if(res.data == "false" || res.data == undefined)
 			$location.path('/');

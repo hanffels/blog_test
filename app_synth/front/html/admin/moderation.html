@@ -5,7 +5,7 @@
     <button type="button" class="close" ng-click="hide_alert_success_art=true">&times;</button>
     {{result_articles}}
 </div>
-<div class="panel panel-primary">
+<div style="padding:0"  class="col-md-5 col-sm-12 panel panel-primary">
 	<div class="panel-heading">Articles</div>
 	<div class="panel-body">
 		<div ng-if="art.status == 0" ng-repeat="art in articles" style="width:100%; margin-bottom:2px;" class="panel panel-default">
@@ -19,7 +19,7 @@
                 <button type="button" class="close" ng-click="articles.splice($index,1)">
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
-                <button type="button" class="close" ng-click="articles[$index].status=1">
+                <button type="button" class="close" ng-click="art.status=1">
                     <span class="glyphicon glyphicon-ok"></span>
                 </button>
             </div>
@@ -28,12 +28,12 @@
 	</div>
 </div>
 
-
+<div class="col-md-1"></div>
 <div ng-hide="hide_alert_success_com" class="alert alert-success alert-dismissable">
     <button type="button" class="close" ng-click="hide_alert_success_com=true">&times;</button>
     {{result_contacts}}
 </div>
-<div class="panel panel-primary">
+<div style="padding:0;" class="col-md-5 col-sm-12 panel panel-primary">
     <div class="panel-heading">Contacts</div>
     <div class="panel-body">
         <div ng-repeat="question in contact" style="width:100%; margin-bottom:2px;" class="panel panel-default">

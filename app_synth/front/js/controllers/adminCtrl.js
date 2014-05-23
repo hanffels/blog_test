@@ -60,7 +60,7 @@ angular
 	.controller('adminPanelsCtrl', function ($scope){
 		$scope.init = function(data){
 			$scope.items = data.data;
-			$scope.title = data.title;
+			$scope.title_cat = data.title;
 			$scope.api = data.api;
 			$scope.properties = data.properties;
 		};
@@ -93,6 +93,7 @@ angular
 		}
 
 		$scope.save_art = function(){
+			console.log($scope.articles);
 			$http.post('/api/article', {content: $scope.articles});
 			$scope.hide_alert_success_art = false;
 			$scope.result_articles= "Done ! ";
