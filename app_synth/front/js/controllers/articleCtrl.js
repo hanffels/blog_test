@@ -1,6 +1,12 @@
 angular.module('app_synth')
 .controller('articleCtrl', function ($scope,$location, $http, $modal) {
+	/*$http.get('/api/article').then(function (res){
+		$scope.articles = res.data;
+	});*/
+
+
 	$http.get('/api/article/Checked').then(function (res){
+		console.log(res);
 		var data = res.data;
 		var sort = [];
 		for (var i = data.length - 1; i >= 0; i--) {
@@ -15,7 +21,7 @@ angular.module('app_synth')
 			for (var i = 0; i < 3 && i<data.length; i++) {
 				slides.push({
 					title: data[i].title,
-					text: data[i].content.substr(0,50).replace(/$/,"..."),
+					text: data[i].content.substr(0,80).replace(/$/,"..."),
 					image : data[i].image
 				});
 			};
@@ -33,13 +39,7 @@ angular.module('app_synth')
 			});
 		}
 		$scope.title = "Articles";
-	});
-
-
-	$scope.isActive = function (viewLocation) { 
-        return viewLocation === $location.path();
-    };
-    
+	}); 
 	$http.get('/api/categories').then(function (res) {
 		$scope.searchCat = {};
 		$scope.categories = res.data;
@@ -153,7 +153,7 @@ angular.module('app_synth')
 			$scope.error = false;
 		}else{
 			article.title = $scope.title_article;
-			article.content =  $scope.content_article;
+			article.content =  $scope.content_article.replace(/<a.*>(.*)<\/a>/g,"<a href='$1'>link</a>");
 			article.image = $scope.url_article;
 			article.categories = $scope.categ;
 			article.status = 0;
@@ -161,8 +161,8 @@ angular.module('app_synth')
 			$scope.title_article = "";
 			$scope.content_article = "";
 			$scope.url_article = "";
-			console.log(article);
-			//$http.post('/api/article/AddOneArticle', {content: article});
+			//console.log(article);
+			$http.post('/api/article/AddOneArticle', {content: article});
 			
 			$scope.success = false;
 		}

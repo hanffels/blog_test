@@ -10,7 +10,7 @@
             ng-class="{img_in_art : !commenting,img_in_popup : commenting}" 
             class="img-rounded">
             <br ng-hide="!commenting" style="clear:both; width:100%"/>
-        <p style="padding-top:3%">{{article.content}}</p>
+        <p ng-bind-html="article.content" style="padding-top:3%">{{article.content}}</p>
         <br style="clear:both; width:100%"/>
         <div style="clear:both; position:absolute; bottom:0; right:0;">
             <i class="text-right text-muted" >Posted by : {{article.username}}</i>

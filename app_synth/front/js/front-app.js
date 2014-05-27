@@ -30,7 +30,7 @@ var dataLoaderRunnerCategories = ['dataLoaderCategories', function (dataLoaderCa
 
 var login={};
 
-angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap','ngCkeditor'])
+angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap','ngCkeditor','ngSanitize'])
   .config(function ($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('article', {

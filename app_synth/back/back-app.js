@@ -10,6 +10,22 @@ synth.app.use(express_session({
 }));
 synth.app.use(bodyParser());
 
+
+var mongodb_on = true;
+console.log("MongoDB on : "+mongodb_on);
+/* Connect to Mongo DB */
+var db = require('promised-mongo')(process.env.MONGODB || 'article');
+
+ //Provide DB connection to request handlers 
+synth.app.use(function (req, res, next) {
+	req.mongodb_on = mongodb_on;
+  req.db = db;
+  next();
+});
+/*
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://55.55.55.5/article');
+*/
 synth.app.use(function (req,res,next) {
 	req.url_article = 'back/files/article.json';
     req.url_comments = 'back/files/comment.json';
@@ -18,22 +34,6 @@ synth.app.use(function (req,res,next) {
     req.url_contact = 'back/files/contact.json';
     req.url_categories = 'back/files/categories.json';
 	next();
-});
-
-synth.app.post('/upload', function (req, res) {
-	var fs = require('fs');
-    var image =  req.files.image;
-    console.log(req.files);
-    var newImageLocation = "/back/files/images" + image.name;
-    
-    fs.readFile(image.path, function(err, data) {
-        fs.writeFile(newImageLocation, data, function(err) {
-            res.json(200, { 
-                src: 'images/' + image.name,
-                size: image.size
-            });
-        });
-    });
 });
 
 /* Init and return synth app */

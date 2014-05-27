@@ -37,3 +37,8 @@ exports.postRemoveOne = function (req,res){
 	};
 	return fs.writeFileSync(req.url_comments, JSON.stringify(data), "UTF-8");
 };
+
+exports.post = function (req,res){
+	var fs =require('fs');
+	return fs.writeFileSync(req.url_comments, JSON.stringify(req.body.content), "UTF-8");
+};

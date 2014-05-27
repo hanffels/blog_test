@@ -59,6 +59,7 @@ angular
 
 	.controller('adminPanelsCtrl', function ($scope){
 		$scope.init = function(data){
+			console.log(data.data);
 			$scope.items = data.data;
 			$scope.title_cat = data.title;
 			$scope.api = data.api;
