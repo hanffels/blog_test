@@ -68,7 +68,7 @@ footer {
 }
 
 .popup_comments::-webkit-scrollbar { 
-    display: none; 
+    display: auto; 
 }
 
 .add_comment{

@@ -6,13 +6,12 @@ angular.module('app_synth')
 
 
 	$http.get('/api/article/Checked').then(function (res){
-		console.log(res);
 		var data = res.data;
-		var sort = [];
+		/*var sort = [];
 		for (var i = data.length - 1; i >= 0; i--) {
 			sort.push(data[i]);
 		};
-		data = sort;
+		data = sort;*/
 		console.log(data);
 		var titles = [];
 		var images = [];
@@ -84,7 +83,7 @@ angular.module('app_synth')
 	}
     $http.get('/api/comment?id_article='+$scope.article.id,{id_article: $scope.article.id}).then(function (res){
     	var data = [];
-
+    	//console.log(res);
     	for (var i = res.data.length - 1; i >= 0; i--) {
     		data.push(res.data[i])
     	};

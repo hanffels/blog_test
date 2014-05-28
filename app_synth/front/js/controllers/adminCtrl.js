@@ -30,7 +30,7 @@ angular
 			data: data_comment,
 			title : 'Comments',
 			api : 'comment',
-			properties : ['id','user','date','content']
+			properties : ['id','id_article','user','date','content']
 		}
 		var contact_admin = {
 			data: data_contact,
@@ -72,7 +72,7 @@ angular
 		$scope.hide_alert_success_com=true;
 		$scope.hide_alert_success_art=true;
 
-		$http.get('/api/article').then(function (res){
+		$http.get('/api/article/Unchecked').then(function (res){
 			if(res.data == undefined || res.data.length == 0)
 				$scope.admin_hide = true;
 			else
@@ -95,7 +95,7 @@ angular
 
 		$scope.save_art = function(){
 			console.log($scope.articles);
-			$http.post('/api/article', {content: $scope.articles});
+			$http.post('/api/article/Moderation', {content: $scope.articles});
 			$scope.hide_alert_success_art = false;
 			$scope.result_articles= "Done ! ";
 		}

@@ -14,7 +14,7 @@ synth.app.use(bodyParser());
 var mongodb_on = true;
 console.log("MongoDB on : "+mongodb_on);
 /* Connect to Mongo DB */
-var db = require('promised-mongo')(process.env.MONGODB || 'article');
+var db = require('promised-mongo')(process.env.MONGODB || 'whatyouhear');
 
  //Provide DB connection to request handlers 
 synth.app.use(function (req, res, next) {
@@ -28,11 +28,11 @@ mongoose.connect('mongodb://55.55.55.5/article');
 */
 synth.app.use(function (req,res,next) {
 	req.url_article = 'back/files/article.json';
-    req.url_comments = 'back/files/comment.json';
+  req.url_comments = 'back/files/comment.json';
 	req.url_logins = 'back/files/login.json';
 	req.url_roles = 'back/files/roles.json';
-    req.url_contact = 'back/files/contact.json';
-    req.url_categories = 'back/files/categories.json';
+  req.url_contact = 'back/files/contact.json';
+  req.url_categories = 'back/files/categories.json';
 	next();
 });
 

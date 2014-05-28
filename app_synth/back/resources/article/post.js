@@ -13,7 +13,7 @@ exports.postAddOneArticle = function (req, res) {
 		else
 			month = (d.getMonth()+1);
 
-		new_article.date_hour = d.getDate()+"/"+month+"/"+d.getFullYear()+" "+d.getHours()+" "+d.getMinutes();
+		new_article.date_hour = d.getDate()+"/"+month+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes();
 		new_article.user = req.session.user_id;
 
 		data.push(new_article);
@@ -24,16 +24,19 @@ exports.postAddOneArticle = function (req, res) {
 
 	else {
 		var new_article = req.body.content;
-		new_article.id = req.db.collection('article').count();
-		var d = new Date();
-		if ((d.getMonth()+1) < 10)
-			month = "0"+(d.getMonth()+1);
-		else
-			month = (d.getMonth()+1);
+		req.db.collection('article').find().toArray().then(function (res){
+			new_article.id=res.length;
 
-		new_article.date_hour = d.getDate()+"/"+month+"/"+d.getFullYear()+" "+d.getHours()+" "+d.getMinutes();
-		new_article.user = req.session.user_id;
+			var d = new Date();
+			if ((d.getMonth()+1) < 10)
+				month = "0"+(d.getMonth()+1);
+			else
+				month = (d.getMonth()+1);
 
-		return req.db.collection('article').insert(new_article);
+			new_article.date_hour = d.getDate()+"/"+month+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes();
+			new_article.user = req.session.user_id;
+
+			return req.db.collection('article').insert(new_article);
+		});
 	}
 };

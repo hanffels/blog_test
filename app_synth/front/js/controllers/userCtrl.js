@@ -1,3 +1,4 @@
+
 angular.module('app_synth')
 .controller('userCtrl', function ($scope, $http, $route){
 	$scope.hide_alert_error=true;
@@ -6,9 +7,9 @@ angular.module('app_synth')
 	var role_id;
 
 	$http.get('/api/login/OneUser').then(function (res){
-		user = res.data
+		user = res.data[0];
 
-		console.log(user);
+		//console.log(user);
 
 		$scope.confirm = true;
 

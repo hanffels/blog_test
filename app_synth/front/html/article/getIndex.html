@@ -21,7 +21,7 @@
 	</li>
   <li class="list-group-item" ng-repeat="article in articles | filter:searchCat">
   	<span class="hour_article badge">{{article.date_hour}}</span>
-    <h4 class="content">{{article.title}} : </h4>
+    <h4 class="content">{{article.title}} :</h4>
     <img ng-src="{{article.image}}" style="float:left;margin-right:2%" class="img_in_art img-rounded">
     <p ng-bind-html="article.content+'...'"></p>
     <br style="clear:both; width:100%"/>

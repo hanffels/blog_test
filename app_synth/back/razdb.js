@@ -1,4 +1,4 @@
-var db = require('promised-mongo')(process.env.MONGODB || 'article');
+var db = require('promised-mongo')(process.env.MONGODB || 'whatyouhear');
 
 db.collection('article').drop();
 db.collection('categories').drop();

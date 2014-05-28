@@ -18,7 +18,7 @@ exports.getChecked = function (req, res) {
 	  	return data;
 	  }
 	  else{
-	  	return req.db.collection('article').find({status:'1'}).toArray();
+	  	return req.db.collection('article').find({status:1}).sort({id:-1}).toArray();
 	  }
 };
 
@@ -35,6 +35,6 @@ exports.getUnchecked = function (req, res) {
 	  	return data;
 	}
 	else{
-		return req.db.collection('article').find({status:'0'}).toArray();
+		return req.db.collection('article').find({status:0}).toArray();
 	}
 };
