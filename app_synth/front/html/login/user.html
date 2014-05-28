@@ -4,7 +4,10 @@
 	<button type="button" class="close" ng-click="hide_alert_error = true;">&times;</button>
 	{{result}}
 </div>
-
+<div ng-hide="hide_alert_success" class="alert alert-success alert-dismissable">
+	<button type="button" class="close" ng-click="hide_alert_success=true">&times;</button>
+	{{result}}
+</div>
 
 <div class="panel panel-primary">
 	<div class="panel-heading">Welcome : {{username}}!</div>
@@ -22,6 +25,10 @@
 			<div class="col-sm-10">
 		      <input type="text" class="form-control" disabled="disabled" ng-model="role">
 		    </div>
+		    <label class="col-sm-2 control-label">E-mail</label>
+			<div class="col-sm-10">
+		      <input type="text" class="form-control" ng-model="mail">
+		    </div>
 		    <label class="col-sm-2 control-label">Password</label>
 			<div class="col-sm-10">
 		      <input ng-focus="confirm = false" type="password" class="form-control" ng-model="pwd">
@@ -35,8 +42,4 @@
 		</div>
 		<button ng-click="save()" class="btn btn-primary" style="text-align:center;margin-top:2%;">Save your changes</button>
 	</div>
-</div>
-<div ng-hide="hide_alert_success" class="alert alert-success alert-dismissable">
-	<button type="button" class="close" ng-click="hide_alert_success=true">&times;</button>
-	{{result}}
 </div>

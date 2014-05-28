@@ -1,17 +1,10 @@
 angular.module('app_synth')
 .controller('articleCtrl', function ($scope,$location, $http, $modal) {
-	/*$http.get('/api/article').then(function (res){
-		$scope.articles = res.data;
-	});*/
+	$scope.loading = false;
 
 
 	$http.get('/api/article/Checked').then(function (res){
 		var data = res.data;
-		/*var sort = [];
-		for (var i = data.length - 1; i >= 0; i--) {
-			sort.push(data[i]);
-		};
-		data = sort;*/
 		console.log(data);
 		var titles = [];
 		var images = [];
@@ -35,6 +28,7 @@ angular.module('app_synth')
 					};
 				};
 				$scope.articles = data;
+				$scope.loading = true;
 			});
 		}
 		$scope.title = "Articles";

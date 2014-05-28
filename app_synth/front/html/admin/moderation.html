@@ -5,16 +5,19 @@
     <button type="button" class="close" ng-click="hide_alert_success_art=true">&times;</button>
     {{result_articles}}
 </div>
-<div style="padding:0"  class="col-md-5 col-sm-12 panel panel-primary">
+<div style="padding:0"  class="col-md-12 col-sm-12 panel panel-primary">
 	<div class="panel-heading">Articles</div>
 	<div class="panel-body">
+        <div ng-hide="loading_art"><center>
+            <img src="../bower_components/images/loading.gif" alt="loading" style="width:20%">
+        </center></div>
 		<div ng-if="art.status == 0" ng-repeat="art in articles" style="width:100%; margin-bottom:2px;" class="panel panel-default">
             <div style="height:30px;font-size:14px;padding:5px 10px;" class="panel-heading">
                 <span popover="{{art.user}}" popover-trigger="mouseenter">{{art.title}}</span>
                 <span style="font-size:12px" class="date_comment float_right"><i>at {{art.date_hour}}</i></span>
             </div>
             <div class="panel-body" style="padding:10px;">
-                <span class="content_comment">{{art.content}}</span>
+                <span ng-bind-html="art.content" class="content_comment"></span>
 
                 <button type="button" class="close" ng-click="articles.splice($index,1)">
                     <span class="glyphicon glyphicon-remove"></span>
@@ -36,6 +39,9 @@
 <div style="padding:0;" class="col-md-5 col-sm-12 panel panel-primary">
     <div class="panel-heading">Contacts</div>
     <div class="panel-body">
+        <div ng-hide="loading_contact"><center>
+            <img src="../bower_components/images/loading.gif" alt="loading" style="width:20%">
+        </center></div>
         <div ng-repeat="question in contact" style="width:100%; margin-bottom:2px;" class="panel panel-default">
             <div style="height:30px;font-size:14px;padding:5px 10px;" class="panel-heading">
                 <span popover="{{question.name}}" popover-trigger="mouseenter">by {{question.mail}}</span>
@@ -49,5 +55,62 @@
             </div>
         </div>
         <center><button type="button" class="btn btn-primary btn-sm" ng-click="save_contact()">Save</button></center>
+    </div>
+</div>
+
+<div class="col-md-1"></div>
+<div ng-hide="hide_alert_success_use" class="alert alert-success alert-dismissable">
+    <button type="button" class="close" ng-click="hide_alert_success_use=true">&times;</button>
+    {{result_users}}
+</div>
+
+<div style="padding:0"  class="col-md-12 col-sm-12 panel panel-primary">
+    <div class="panel-heading">Sign_up Requests</div>
+    <div class="panel-body">
+        <div ng-hide="loading_sign"><center>
+            <img src="../bower_components/images/loading.gif" alt="loading" style="width:20%">
+        </center></div>
+        <div ng-repeat="user in users_sign" style="width:100%; margin-bottom:2px;" class="panel panel-default">
+            <div style="height:30px;font-size:14px;padding:5px 10px;" class="panel-heading">
+                {{user.username}}
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">First name</label>
+                        <div class="col-sm-10">
+                          <span class="form-control">{{user.firstname}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Last name</label>
+                        <div class="col-sm-10">
+                          <span class="form-control">{{user.name}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Last name</label>
+                        <div class="col-sm-10">
+                          <span class="form-control">{{user.mail}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Role</label>
+                        <div class="col-sm-10">
+                          <select type="text" class="form-control" 
+                          ng-init="rol = rol || roles[0]" 
+                          ng-model="user.role" 
+                          ng-options="rol.id as rol.name for rol in roles">
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="close" ng-click="users_sign.splice($index,1)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <center><button type="button" class="btn btn-primary btn-sm" ng-click="save_rol()">Save</button></center>
     </div>
 </div>

@@ -28,6 +28,7 @@ mongoose.connect('mongodb://55.55.55.5/article');
 */
 synth.app.use(function (req,res,next) {
 	req.url_article = 'back/files/article.json';
+  req.url_sign = 'back/files/sign_up.json';
   req.url_comments = 'back/files/comment.json';
 	req.url_logins = 'back/files/login.json';
 	req.url_roles = 'back/files/roles.json';

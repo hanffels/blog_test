@@ -1,6 +1,6 @@
 angular
 	.module('app_synth')
-	.controller('adminGlobalCtrl', function ($scope, $http, $route,  $location, data_categories, data_articles, data_users,data_roles,data_comment,data_contact){
+	.controller('adminGlobalCtrl', function ($scope, $http, $route,  $location, data_categories, data_articles, data_users,data_roles,data_comment,data_contact,data_sign){
 		if(login.isLogged == false || login.isLogged == undefined)
 			$location.path('/');
 
@@ -18,7 +18,7 @@ angular
 			data: data_users,
 			title : 'Members',
 			api : 'login',
-			properties : ['id','username','role','name','firstname','pwd']
+			properties : ['id','username','mail','role','name','firstname','pwd']
 		}
 		var roles_admin = {
 			data: data_roles,
@@ -44,8 +44,14 @@ angular
 			api : 'categories',
 			properties : ['id','name']
 		}
+		var sign_admin = {
+			data: data_sign,
+			title : 'Signing up',
+			api : 'sign_up',
+			properties : ['id','username','mail','role','name','firstname','pwd']
+		}
 
-		$scope.panels = [articles_admin,users_admin,roles_admin,comment_admin,contact_admin,categories_admin];
+		$scope.panels = [articles_admin,users_admin,roles_admin,comment_admin,contact_admin,categories_admin,sign_admin];
 
 		$scope.save = function(api_name, contents){
 			$http.post('/api/'+api_name, {content: contents});
@@ -71,21 +77,65 @@ angular
 		$scope.title = 'Moderation';
 		$scope.hide_alert_success_com=true;
 		$scope.hide_alert_success_art=true;
+		$scope.hide_alert_success_use=true;
+		$scope.loading_art = false;
+		$scope.loading_contact = false;
 
 		$http.get('/api/article/Unchecked').then(function (res){
-			if(res.data == undefined || res.data.length == 0)
+			if(res.data == undefined || res.data.length == 0){
 				$scope.admin_hide = true;
-			else
+				$scope.loading_art = true;
+			}else{
 				$scope.articles = res.data;
+				$scope.loading_art = true;
+			}
 		});
 
 
 		$http.get('/api/contact').then(function (res){
+			if(res.data == undefined || res.data.length == 0){
+				$scope.admin_hide = true;
+				$scope.loading_contact = true;
+			}else{
+				$scope.contact = res.data;
+				$scope.loading_contact = true;
+			}
+		});
+
+		$http.get('/api/sign_up').then(function (res){
+			if(res.data == undefined || res.data.length == 0){
+				$scope.admin_hide = true;
+				$scope.loading_sign = true;
+			}else{
+				$scope.users_sign = res.data;
+				$scope.loading_sign = true;
+			}
+		});
+
+		$http.get('/api/roles').then(function (res){
 			if(res.data == undefined || res.data.length == 0)
 				$scope.admin_hide = true;
-			else
-				$scope.contact = res.data;
+			else{
+				console.log(res.data);
+				$scope.roles = res.data;
+			}
 		});
+
+		$scope.save_rol = function (){
+			var users = $scope.users_sign;
+			var check = true;
+			for (var i = 0; i < users.length; i++) {
+				if(users[i].role == undefined || users[i].role == "")
+					check=false
+			};
+			if(!check){
+				alert('Please set all the roles');
+			}else {
+				$http.post('/api/login/AddSome', {content: $scope.users_sign});
+				$scope.hide_alert_success_use = false;
+				$scope.result_users= "Done ! ";
+			}
+		}
 
 		$scope.save_contact = function(){
 			$http.post('/api/contact', {content: $scope.contact});

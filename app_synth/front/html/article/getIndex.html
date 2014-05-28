@@ -15,15 +15,18 @@
 <ul class="list-group">
 	<li class="list-group-item">
 		<ul class="nav nav-tabs">
-			<li><a ng-click="searchCat.categories=$" href="#">All</a></li>
-		    <li ng-repeat="cat in categories"><a ng-click="searchCat.categories=cat.id" href="#">{{cat.name}}</a></li>
+			<li><a ng-click="searchCat.categories=$">All</a></li>
+		    <li ng-repeat="cat in categories"><a ng-click="searchCat.categories=cat.id">{{cat.name}}</a></li>
 		</ul>
 	</li>
+	<div ng-hide="loading" class="list-group-item"><center>
+		<img src="../bower_components/images/loading.gif" alt="loading" style="width:20%">
+	</center></div>
   <li class="list-group-item" ng-repeat="article in articles | filter:searchCat">
   	<span class="hour_article badge">{{article.date_hour}}</span>
     <h4 class="content">{{article.title}} :</h4>
     <img ng-src="{{article.image}}" style="float:left;margin-right:2%" class="img_in_art img-rounded">
-    <p ng-bind-html="article.content+'...'"></p>
+    <p ng-bind-html="article.content"></p>
     <br style="clear:both; width:100%"/>
     <div class="footer-article">
 	    <button class="btn btn-info btn-xs" ng-click="readmore($index)">Read more</button>

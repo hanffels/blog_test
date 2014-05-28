@@ -27,37 +27,76 @@ var dataLoaderRunnerCategories = ['dataLoaderCategories', function (dataLoaderCa
     return dataLoaderCategories();
   }
 ];
-
+var dataLoaderRunnerSign = ['dataLoaderSign', function (dataLoaderSign) {
+    return dataLoaderSign();
+  }
+];
 var login={};
 
 angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap','ngCkeditor','ngSanitize'])
-  .config(function ($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider) {
+
+    $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('article', {
-        url: '/article'
+        url: '/article',
+        templateUrl: '/html/article/getIndex.html',
+        controller: 'articleCtrl'
       })
       .state('postArticle', {
-        url: '/postArticle'
+        url: '/postArticle',
+        templateUrl: '/html/article/postArticle.html',
+        controller: 'addArticleCtrl'
+      })
+      .state('sign_up', {
+        url: '/sign_up',
+        templateUrl: 'html/login/sign_up.html',
+        controller: 'sign_upCtrl',
+        resolve: {
+          data_users: dataLoaderRunnerUsers,
+          data_sign: dataLoaderRunnerSign
+        }
       })
       .state('moderation', {
-        url: '/moderation'
+        url: '/moderation',
+        templateUrl: '/html/admin/moderation.html',
+        controller: 'moderationCtrl'
       })
       .state('log_in', {
-        url: '/'
+        url: '/',
+        templateUrl: '/html/login/login.html',
+        controller: 'loginCtrl'
       })
       .state('user', {
-        url: '/user'
+        url: '/user',
+        templateUrl: '/html/login/user.html',
+        controller: 'userCtrl'
       })
       .state('contact', {
-        url:'/contact'
+        url:'/contact',
+        templateUrl: 'html/contact.html',
+        controller: 'contactCtrl'
       })
       .state('infos', {
-        url:'/infos'
+        url:'/infos',
+        templateUrl: '/html/info.html',
+        controller: 'infoCtrl'
       })
       .state('admin', {
-        url:'/admin'
+        url:'/admin',
+        templateUrl: 'html/admin/admin.html',
+        controller: 'adminGlobalCtrl',
+        resolve: {
+          data_articles: dataLoaderRunnerArticle,
+          data_users: dataLoaderRunnerUsers,
+          data_roles: dataLoaderRunnerRoles,
+          data_comment: dataLoaderRunnerComment,
+          data_contact: dataLoaderRunnerContact,
+          data_categories: dataLoaderRunnerCategories,
+          data_sign: dataLoaderRunnerSign
+        }
       });
-
+/*
     $routeProvider
     .when('/', {
       templateUrl: '/html/login/login.html',
@@ -73,7 +112,7 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap','ngCkeditor','
     })
     .when('/user', {
       templateUrl: '/html/login/user.html',
-      controller: 'userCtrl',
+      controller: 'userCtrl'
     })
     .when('/article', {
       templateUrl: '/html/article/getIndex.html',
@@ -88,6 +127,14 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap','ngCkeditor','
       templateUrl: 'html/contact.html',
       controller: 'contactCtrl'
     })
+    .when('/sign_up', {
+      templateUrl: 'html/login/sign_up.html',
+      controller: 'sign_upCtrl',
+      resolve: {
+        data_users: dataLoaderRunnerUsers,
+        data_sign: dataLoaderRunnerSign
+      }
+    })
     .when('/admin', {
       templateUrl: 'html/admin/admin.html',
       controller: 'adminGlobalCtrl',
@@ -97,12 +144,13 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap','ngCkeditor','
         data_roles: dataLoaderRunnerRoles,
         data_comment: dataLoaderRunnerComment,
         data_contact: dataLoaderRunnerContact,
-        data_categories: dataLoaderRunnerCategories
+        data_categories: dataLoaderRunnerCategories,
+        data_sign: dataLoaderRunnerSign
       }
     })
     .otherwise('/');
     
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true);*/
   })
 
 .service('dataLoaderArticle', function ($location, $http) {
@@ -118,6 +166,19 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap','ngCkeditor','
     }
   };
 })
+.service('dataLoaderSign', function ($location, $http) {
+  return function () {
+    if (preloadedData) {
+      var data = preloadedData;
+      preloadedData = null;
+      return data;
+    } else {
+      return $http.get( '/api/sign_up' ).then(function (res) {
+        return res.data;
+      });
+    }
+  };
+})
 .service('dataLoaderUsers', function ($location, $http) {
   return function () {
     if (preloadedData) {
@@ -125,7 +186,7 @@ angular.module('app_synth', ['ngRoute','ui.router','ui.bootstrap','ngCkeditor','
       preloadedData = null;
       return data;
     } else {
-      return $http.get( '/api/login' ).then(function (res) {
+      return $http.get('/api/login').then(function (res) {
         return res.data;
       });
     }

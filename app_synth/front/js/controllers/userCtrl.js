@@ -17,6 +17,7 @@ angular.module('app_synth')
 		$scope.username = user.username;
 		$scope.name = user.name;
 		$scope.firstname = user.firstname;
+		$scope.mail = user.mail;
 		$scope.pwd = user.pwd;
 		$scope.pwd_conf = user.pwd;
 		$http.get('/api/roles').then(function (res){
@@ -47,6 +48,7 @@ angular.module('app_synth')
 			user.firstname = $scope.firstname;
 			user.pwd = $scope.pwd;
 			user.role =role_id;
+			user.mail = $scope.mail;
 
 			$http.post('/api/login/ModifyUser', {content: user});
 			$scope.hide_alert_success = false;

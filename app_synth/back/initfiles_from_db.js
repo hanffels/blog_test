@@ -8,6 +8,7 @@ url_logins = 'back/files/login.json';
 url_roles = 'back/files/roles.json';
 url_contact = 'back/files/contact.json';
 url_categories = 'back/files/categories.json';
+url_sign = 'back/files/sign_up.json';
 
 var end =0;
 
@@ -44,6 +45,12 @@ db.collection('login').find().toArray().then(function (res){
 db.collection('roles').find().toArray().then(function (res){
 	fs.writeFileSync(url_roles, JSON.stringify(res), "UTF-8");
 	console.log('roles Done !');
+	end++;
+	return false;
+});
+db.collection('sign_up').find().toArray().then(function (res){
+	fs.writeFileSync(url_sign, JSON.stringify(res), "UTF-8");
+	console.log('sign_up Done !');
 	end++;
 	return false;
 });
